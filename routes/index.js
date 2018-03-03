@@ -156,7 +156,7 @@ router.post('/move', function (req, res) {
   function chooseTarget() {
     // if (gameState.you.length < getLongestLength()){
     //     return findFood();
-    // } else 
+    // } else
     if (gameState.snakes.data.length == 2) {
         if (gameState.you.health > 40) {
             return findTail();
@@ -310,6 +310,24 @@ router.post('/move', function (req, res) {
           validMoves.push(possibleMoves[i]);
         }
       }
+    }
+
+    function checkSpot(x,y){
+      var numberOfSafeSpots = 0;
+      if (grid.nodes[y][x + 1].walkable) {
+        numberOfSafeSpots += 1;
+      }
+      if (grid.nodes[y][x - 1].walkable) {
+        numberOfSafeSpots += 1;
+      }
+      if (grid.nodes[y + 1][x].walkable) {
+        numberOfSafeSpots += 1;
+      }
+      if (grid.nodes[y - 1][x].walkable) {
+        numberOfSafeSpots += 1;
+      }
+      return numberOfSafeSpots;
+
     }
 
     snakeResponse.move = validMoves[0].direction;
